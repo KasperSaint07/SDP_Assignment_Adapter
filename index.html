@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Transport</title>
+</head>
+<body>
+    <h1>Random Transport Generator</h1>
+    <button onclick="sendRequest()">Get Random Transport</button>
+    <p id="result"></p>
+
+    <script>
+    function sendRequest() {
+        const regions = ["usa", "asia"];
+        const types = ["ship", "truck"];
+
+        const randomRegion = regions[Math.floor(Math.random() * regions.length)];
+        const randomType = types[Math.floor(Math.random() * types.length)];
+
+        const url = `http://localhost:8080/transport?country=${randomRegion}&type=${randomType}`;
+
+        console.log("Запрос:", url);
+
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    `Запрос: ${randomRegion}, ${randomType}\nОтвет: ${data}`;
+            })
+            .catch(err => console.error("Ошибка:", err));
+    }
+    </script>
+</body>
+</html>
